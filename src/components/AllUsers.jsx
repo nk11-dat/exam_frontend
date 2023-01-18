@@ -1,7 +1,7 @@
 import React from 'react';
 import facade from "../apiFacade.js";
 
-function AllOwners({dataFromServer, petType, username}) {
+function AllUsers({dataFromServer}) {
     // //TODO: Se om du kan bruge username til det samme som "addPet", bare hvor der testes om det er null eller ej
     // const addClick = (e) => {
     //     console.log(e.target.value)
@@ -20,7 +20,7 @@ function AllOwners({dataFromServer, petType, username}) {
 
     return (
         <div className="column middle">
-            <h2 className={"text-center"}>All Owners</h2>
+            <h2 className={"text-center"}>All Users</h2>
             {dataFromServer.length > 0 ? (
                     <table className="table table-dark">
                         <thead>
@@ -34,8 +34,8 @@ function AllOwners({dataFromServer, petType, username}) {
                         {dataFromServer.map(user => (
                             <tr key={user.userName}>
                                 <td>{user.userName}</td>
-                                <td>{user.address}</td>
-                                <td>{user.phone}</td>
+                                {/*<td>{user.address}</td>*/}
+                                {/*<td>{user.phone}</td>*/}
                             </tr>
                         ))}
                         </tbody>
@@ -46,4 +46,4 @@ function AllOwners({dataFromServer, petType, username}) {
     );
 }
 
-export default AllOwners;
+export default AllUsers;

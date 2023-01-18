@@ -44,4 +44,4 @@
 
 9. cd dist
 
-10. scp -r * root@164.92.207.22:/var/www/exam_frontend# exam_frontend
+10. scp -r * root@164.92.207.22:/var/www/exam_frontend

@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink, Link} from "react-router-dom";
-import facade from "../../apiFacade.js";
+import apiFacade from "../../apiFacade.js";
 
 
 function SideBar(props) {
@@ -8,29 +8,29 @@ function SideBar(props) {
     return (
         <div className="column side">
             {/*User navigation sidebar*/}
-            {facade.hasUserAccess('owner', props.loggedIn) ?
+            {apiFacade.hasUserAccess('user', props.loggedIn) ?
                 <nav>
                     <br/>
-                    <div onClick={() => props.fetchAllOwners()}>
-                        <NavLink to="/AllOwners">All Owners</NavLink>
+                    <div>
+                        <NavLink to="/US1">US1</NavLink>
                     </div>
                     <br/>
-                    <div onClick={() => props.fetchAllHarbours()}>
+                    <div> {/*onClick={() => props.fetchAllHarbours()}*/}
                         <NavLink to="/AllHarbours">US2</NavLink>
                     </div>
                     <br/>
-                    <div onClick={() => props.setOwnersByBoat({})}>
+                    <div>
                         <NavLink to="/OwnersByBoat">US3</NavLink>
                     </div>
 
                 </nav> : ""}
 
             {/*Admin navigation sidebar*/}
-            {facade.hasUserAccess('admin', props.loggedIn) ?
+            {apiFacade.hasUserAccess('admin', props.loggedIn) ?
                 <nav>
                     <br/>
                     <div>
-                        <NavLink to="/CreateBoat">Create Boat</NavLink>
+                        <NavLink to="/CreateBoat">Hey Admin</NavLink>
                     </div>
                     {/*<br/>*/}
                     {/*<div>*/}
@@ -38,14 +38,14 @@ function SideBar(props) {
                     {/*</div>*/}
                     <br/>
                     <div onClick={() => {
-                        props.fetchAllBoats()
-                        props.fetchAllOwners()
-                        props.fetchAllHarbours()
+                        // props.fetchAllBoats()
+                        // props.fetchAllOwners()
+                        // props.fetchAllHarbours()
                     }}>
                         <NavLink to="/EditBoat">US6</NavLink>
                     </div>
                     <br/>
-                    <div onClick={() => props.fetchAllBoats()}>
+                    <div>
                         <NavLink to="/DeleteBoat">US7</NavLink>
                     </div>
 
