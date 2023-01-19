@@ -30,23 +30,19 @@ function SideBar(props) {
                 <nav>
                     <br/>
                     <div>
-                        <NavLink to="/CreateBoat">Hey Admin</NavLink>
+                        <NavLink to="/CreateConference">CreateConference(US4)</NavLink>
                     </div>
                     {/*<br/>*/}
                     {/*<div>*/}
                     {/*    <NavLink to="/AllHarbours">US5</NavLink>*/}
                     {/*</div>*/}
                     <br/>
-                    <div onClick={() => {
-                        // props.fetchAllBoats()
-                        // props.fetchAllOwners()
-                        // props.fetchAllHarbours()
-                    }}>
-                        <NavLink to="/EditBoat">US6</NavLink>
+                    <div>
+                        <NavLink to="/">US6</NavLink>
                     </div>
                     <br/>
-                    <div>
-                        <NavLink to="/DeleteBoat">US7</NavLink>
+                    <div onClick={() => props.fetchAllTalks()}>
+                        <NavLink to="/DeleteTalk">US7</NavLink>
                     </div>
 
                 </nav> : ""}

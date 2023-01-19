@@ -10,6 +10,9 @@ import LogIn from "./components/start_components/LogIn.jsx";
 import SignUp from "./components/start_components/SignUp.jsx";
 import AccessDenied from "./components/start_components/AccessDenied.jsx";
 import AllConferences from "./components/AllConferences.jsx";
+import CreateConference from "./components/CreateConference.jsx";
+import DeleteTalk from "./components/DeleteTalk";
+import DeleteChoice from "./components/DeleteChoice.jsx";
 
 function App() {
     //useStates her
@@ -17,12 +20,36 @@ function App() {
     const [errorMessage, setErrorMessage] = useState('It just works! ~Todd Howard');
     const [searchInput, setSearchInput] = useState("")
     const [allConferences, setAllConferences] = useState([{}])
+    const [allTalks, setAllTalks] = useState([{}])
+    const [newConference, setNewConference] = useState({})
 
     const fetchAllConferences = () => {
         apiFacade.fetchData("user/all/conferences", (data) => {
             console.log(data);
             setAllConferences(data)
         }, setErrorMessage)
+    }
+
+    const fetchAllTalks = () => {
+        apiFacade.fetchData("admin/all/talks", (data) => {
+            console.log(data);
+            setAllTalks(data)
+        }, setErrorMessage)
+    }
+
+    const postConference = () => {
+        apiFacade.postData("admin/post/conference", (data) => {
+            console.log(data)
+            setNewConference(data)
+        }, setErrorMessage, newConference)
+        console.log(newConference);
+    }
+
+    const deleteTalk = async (talkId) => { //Wait for deletion before updating all Boats
+        await apiFacade.deleteData("admin/delete/talk/" + talkId, (data) => {
+            console.log(data)
+        }, setErrorMessage)
+        fetchAllTalks() //refresh all boats
     }
 
     const logout = () => {
@@ -37,11 +64,17 @@ function App() {
 
             <div className="row">
                 <Header loggedIn={loggedIn} logout={logout}/>
-                <SideBar loggedIn={loggedIn} fetchAllConferences={fetchAllConferences}/>
+                <SideBar loggedIn={loggedIn} fetchAllConferences={fetchAllConferences} fetchAllTalks={fetchAllTalks}/>
 
                 <Routes>
                     <Route path="/" element={<WelcomePage/>}/>
                     <Route path="AllConferences" element={apiFacade.hasUserAccess('speaker', loggedIn) ? <AllConferences dataFromServer={allConferences}/> : <AccessDenied/>}/>
+                    <Route path="CreateConference" element={apiFacade.hasUserAccess('admin', loggedIn) ? <CreateConference postConference={postConference} newConference={newConference} setNewConference={setNewConference}/> : <AccessDenied/>}/>
+                    {/*<Route path="DeleteChoice" element={apiFacade.hasUserAccess('admin', loggedIn) ? <DeleteChoice fetchAllTalks={fetchAllTalks}/> : <AccessDenied/>}>*/}
+                        <Route path="DeleteTalk" element={apiFacade.hasUserAccess('admin', loggedIn) ? <DeleteTalk dataFromServer={allTalks} onDelete={deleteTalk}/> : <AccessDenied/>}/>
+                        {/*More deletion stuff goes here...*/}
+                    {/*</Route>*/}
+
 
 
                     <Route path="/signUp" element={<SignUp/>}/>
