@@ -1,7 +1,7 @@
 import React from 'react';
 import facade from "../apiFacade.js";
 
-function AllUsers({dataFromServer}) {
+function AllConferences({dataFromServer}) {
     // //TODO: Se om du kan bruge username til det samme som "addPet", bare hvor der testes om det er null eller ej
     // const addClick = (e) => {
     //     console.log(e.target.value)
@@ -22,20 +22,22 @@ function AllUsers({dataFromServer}) {
         <div className="column middle">
             <h2 className={"text-center"}>All Users</h2>
             {dataFromServer.length > 0 ? (
-                    <table className="table table-dark">
+                    <table key={"ConferenceTable"} className="table table-dark">
                         <thead>
-                        <tr>
-                            <th>User name</th>
-                            <th>Address</th>
-                            <th>Phone</th>
+                        <tr key={"header"}>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Capacity</th>
+                            <th>strDate</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        {dataFromServer.map(user => (
-                            <tr key={user.userName}>
-                                <td>{user.userName}</td>
-                                {/*<td>{user.address}</td>*/}
-                                {/*<td>{user.phone}</td>*/}
+                        <tbody key={"TableBody"}>
+                        {dataFromServer.map((conference, index) => (
+                            <tr key={conference.index}> {/*Den vil ikke spise den her key af en underlig årsag...*/}
+                                <td>{conference.conferenceName}</td>
+                                <td>{conference.location}</td>
+                                <td>{conference.capacity}</td>
+                                <td>{conference.strDate}</td>
                             </tr>
                         ))}
                         </tbody>
@@ -46,4 +48,4 @@ function AllUsers({dataFromServer}) {
     );
 }
 
-export default AllUsers;
+export default AllConferences;

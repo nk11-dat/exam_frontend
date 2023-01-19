@@ -9,19 +9,19 @@ import WelcomePage from "./components/start_components/WelcomePage.jsx";
 import LogIn from "./components/start_components/LogIn.jsx";
 import SignUp from "./components/start_components/SignUp.jsx";
 import AccessDenied from "./components/start_components/AccessDenied.jsx";
-import AllUsers from "./components/AllUsers.jsx";
+import AllConferences from "./components/AllConferences.jsx";
 
 function App() {
     //useStates her
     const [loggedIn, setLoggedIn] = useState(false)
     const [errorMessage, setErrorMessage] = useState('It just works! ~Todd Howard');
     const [searchInput, setSearchInput] = useState("")
-    const [allUsers, setAllUsers] = useState({"results": []})
+    const [allConferences, setAllConferences] = useState([{}])
 
-    const fetchAllOwners = () => {
-        apiFacade.fetchData("user/all", (data) => {
-            // console.log(data);
-            setAllUsers(data)
+    const fetchAllConferences = () => {
+        apiFacade.fetchData("user/all/conferences", (data) => {
+            console.log(data);
+            setAllConferences(data)
         }, setErrorMessage)
     }
 
@@ -37,11 +37,11 @@ function App() {
 
             <div className="row">
                 <Header loggedIn={loggedIn} logout={logout}/>
-                <SideBar loggedIn={loggedIn}/>
+                <SideBar loggedIn={loggedIn} fetchAllConferences={fetchAllConferences}/>
 
                 <Routes>
                     <Route path="/" element={<WelcomePage/>}/>
-                    <Route path="AllUsers" element={apiFacade.hasUserAccess('user', loggedIn) ? <AllUsers dataFromServer={allUsers}/> : <AccessDenied/>}/>
+                    <Route path="AllConferences" element={apiFacade.hasUserAccess('speaker', loggedIn) ? <AllConferences dataFromServer={allConferences}/> : <AccessDenied/>}/>
 
 
                     <Route path="/signUp" element={<SignUp/>}/>

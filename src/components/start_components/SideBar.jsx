@@ -8,19 +8,19 @@ function SideBar(props) {
     return (
         <div className="column side">
             {/*User navigation sidebar*/}
-            {apiFacade.hasUserAccess('user', props.loggedIn) ?
+            {apiFacade.hasUserAccess('speaker', props.loggedIn) ?
                 <nav>
                     <br/>
-                    <div>
-                        <NavLink to="/US1">US1</NavLink>
+                    <div onClick={() => props.fetchAllConferences()}>
+                        <NavLink to="/AllConferences">All Conferences</NavLink>
                     </div>
                     <br/>
                     <div> {/*onClick={() => props.fetchAllHarbours()}*/}
-                        <NavLink to="/AllHarbours">US2</NavLink>
+                        <NavLink to="/">US2</NavLink>
                     </div>
                     <br/>
                     <div>
-                        <NavLink to="/OwnersByBoat">US3</NavLink>
+                        <NavLink to="/">US3</NavLink>
                     </div>
 
                 </nav> : ""}
