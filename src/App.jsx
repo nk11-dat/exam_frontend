@@ -13,15 +13,20 @@ import AllConferences from "./components/AllConferences.jsx";
 import CreateConference from "./components/CreateConference.jsx";
 import DeleteTalk from "./components/DeleteTalk";
 import DeleteChoice from "./components/DeleteChoice.jsx";
+import EditConference from "./components/EditConference.jsx";
 
 function App() {
     //useStates her
     const [loggedIn, setLoggedIn] = useState(false)
     const [errorMessage, setErrorMessage] = useState('It just works! ~Todd Howard');
-    const [searchInput, setSearchInput] = useState("")
+    const [specificConference, setSpecificConference] = useState("")
     const [allConferences, setAllConferences] = useState([{}])
     const [allTalks, setAllTalks] = useState([{}])
+    const [allSpeakers, setAllSpeakers] = useState([{}])
     const [newConference, setNewConference] = useState({})
+    const [newTalk, setNewTalk] = useState({})
+    const [newSpeaker, setNewSpeaker] = useState({})
+    const [editConference, setEditConference] = useState({})
 
     const fetchAllConferences = () => {
         apiFacade.fetchData("user/all/conferences", (data) => {
@@ -30,10 +35,24 @@ function App() {
         }, setErrorMessage)
     }
 
+    const fetchSpecificConference = (name) => {
+        apiFacade.fetchData("admin/specific/conference/" + name, (data) => {
+            console.log(data);
+            setSpecificConference(data)
+        }, setErrorMessage)
+    }
+
     const fetchAllTalks = () => {
         apiFacade.fetchData("admin/all/talks", (data) => {
             console.log(data);
             setAllTalks(data)
+        }, setErrorMessage)
+    }
+
+    const fetchAllSpeakers = () => {
+        apiFacade.fetchData("admin/all/speakers", (data) => {
+            console.log(data);
+            setAllSpeakers(data)
         }, setErrorMessage)
     }
 
@@ -45,11 +64,36 @@ function App() {
         console.log(newConference);
     }
 
-    const deleteTalk = async (talkId) => { //Wait for deletion before updating all Boats
+    const postTalk = () => {
+        apiFacade.postData("admin/post/talk", (data) => {
+            console.log(data)
+            setNewTalk(data)
+        }, setErrorMessage, newTalk)
+        console.log(newTalk);
+    }
+
+    const postSpeaker = () => {
+        apiFacade.postData("admin/post/speaker", (data) => {
+            console.log(data)
+            setNewSpeaker(data)
+        }, setErrorMessage, newSpeaker)
+        console.log(newSpeaker);
+    }
+
+
+    const putConference = () => {
+        apiFacade.putData("admin/put/conference", (data) => {
+            console.log(data)
+            setEditConference(data)
+        }, setErrorMessage, editConference)
+        console.log(editConference);
+    }
+
+    const deleteTalk = async (talkId) => { //Wait for deletion before updating allTalks
         await apiFacade.deleteData("admin/delete/talk/" + talkId, (data) => {
             console.log(data)
         }, setErrorMessage)
-        fetchAllTalks() //refresh all boats
+        fetchAllTalks() //refresh all talks
     }
 
     const logout = () => {
@@ -64,16 +108,19 @@ function App() {
 
             <div className="row">
                 <Header loggedIn={loggedIn} logout={logout}/>
-                <SideBar loggedIn={loggedIn} fetchAllConferences={fetchAllConferences} fetchAllTalks={fetchAllTalks}/>
+                <SideBar loggedIn={loggedIn} fetchAllConferences={fetchAllConferences} fetchAllTalks={fetchAllTalks} fetchAllSpeakers={fetchAllSpeakers}/>
 
                 <Routes>
                     <Route path="/" element={<WelcomePage/>}/>
                     <Route path="AllConferences" element={apiFacade.hasUserAccess('speaker', loggedIn) ? <AllConferences dataFromServer={allConferences}/> : <AccessDenied/>}/>
-                    <Route path="CreateConference" element={apiFacade.hasUserAccess('admin', loggedIn) ? <CreateConference postConference={postConference} newConference={newConference} setNewConference={setNewConference}/> : <AccessDenied/>}/>
+                    <Route path="CreateConference" element={apiFacade.hasUserAccess('admin', loggedIn) ?
+                        <CreateConference postConference={postConference} postTalk={postTalk} postSpeaker={postSpeaker} newSpeaker={newSpeaker} setNewSpeaker={setNewSpeaker} setNewTalk={setNewTalk} newTalk={newTalk} newConference={newConference} setNewConference={setNewConference} allConferences={allConferences}/> : <AccessDenied/>}/>
                     {/*<Route path="DeleteChoice" element={apiFacade.hasUserAccess('admin', loggedIn) ? <DeleteChoice fetchAllTalks={fetchAllTalks}/> : <AccessDenied/>}>*/}
-                        <Route path="DeleteTalk" element={apiFacade.hasUserAccess('admin', loggedIn) ? <DeleteTalk dataFromServer={allTalks} onDelete={deleteTalk}/> : <AccessDenied/>}/>
+                    <Route path="DeleteTalk" element={apiFacade.hasUserAccess('admin', loggedIn) ? <DeleteTalk dataFromServer={allTalks} onDelete={deleteTalk}/> : <AccessDenied/>}/>
                         {/*More deletion stuff goes here...*/}
                     {/*</Route>*/}
+                    <Route path="EditConference" element={apiFacade.hasUserAccess('admin', loggedIn) ? <EditConference conferenceToEdit={editConference} setConferenceToEdit={setEditConference} putConference={putConference} allConferences={allConferences} allTalks={allTalks} allSpeakers={allSpeakers} fetchSpecificConference={fetchSpecificConference} specificConference={specificConference}/> : <AccessDenied/>}/>
+
 
 
 

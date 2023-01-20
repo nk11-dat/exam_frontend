@@ -29,7 +29,9 @@ function SideBar(props) {
             {apiFacade.hasUserAccess('admin', props.loggedIn) ?
                 <nav>
                     <br/>
-                    <div>
+                    <div onClick={() => {
+                        props.fetchAllConferences()}
+                    }>
                         <NavLink to="/CreateConference">CreateConference(US4)</NavLink>
                     </div>
                     {/*<br/>*/}
@@ -37,8 +39,12 @@ function SideBar(props) {
                     {/*    <NavLink to="/AllHarbours">US5</NavLink>*/}
                     {/*</div>*/}
                     <br/>
-                    <div>
-                        <NavLink to="/">US6</NavLink>
+                    <div onClick={() => {
+                        props.fetchAllTalks()
+                        props.fetchAllConferences()
+                        props.fetchAllSpeakers()
+                    }}>
+                        <NavLink to="/EditConference">US6</NavLink>
                     </div>
                     <br/>
                     <div onClick={() => props.fetchAllTalks()}>

@@ -3,7 +3,6 @@ import facade from "../apiFacade.js";
 import {Button} from "react-bootstrap";
 
 function DeleteTalk({dataFromServer, onDelete}) {
-    // //TODO: Se om du kan bruge username til det samme som "addPet", bare hvor der testes om det er null eller ej
 
     useEffect(() => console.log(dataFromServer))
 
