@@ -76,7 +76,7 @@ function CreateConference({postConference, setNewConference, newConference, post
                 <button onClick={handleSubmit} type="submit">Create</button>
             </form>
 
-            <form onSubmit={handleSubmit}>
+            <form>
                 <h2>Talk</h2>
                 <label>
                     Conference Name
@@ -119,13 +119,55 @@ function CreateConference({postConference, setNewConference, newConference, post
                                console.log(newTalk);
                            }} required={true}/>
                 </label>
-                {/*<select id="make" name="make" ref={makeSelector} onChange={handleMake}></select>*/}
-                {/*<input id={"image"} name={"image"} type={"text"} placeholder={"Image Link"} onChange={handleImage}/>*/}
 
                 <button onClick={(e) => {
                     e.preventDefault();
                     postTalk()
                     console.log(newTalk);
+                }} type="submit">Create</button>
+            </form>
+
+            <form>
+                <h2>Speaker</h2>
+                <label>
+                    Username
+                    <input className={"form-control"} id={"Username"} name={"Username"} type={"text"} placeholder={"Username..."}
+                           onChange={(e) => {
+                               setNewSpeaker(prev => ({...prev, userName: e.target.value}))
+                               console.log(newSpeaker);
+                           }} required={true}/>
+                </label>
+                <label>
+                    Password
+                    <input className={"form-control"} id={"Password"} name={"Password"} type={"text"} placeholder={"Password..."}
+                           onChange={(e) => {
+                               setNewSpeaker(prev => ({...prev, password: e.target.value}))
+                               console.log(newSpeaker);
+                           }} required={true}/>
+                </label>
+                <label>
+                    Profession
+                    <input className={"form-control"} id={"Profession"} name={"Profession"} type={"text"} placeholder={"Profession..."}
+                           onChange={(e) => {
+                               setNewSpeaker(prev => ({...prev, profession: e.target.value}))
+                               console.log(newSpeaker);
+                           }} required={true}/>
+                </label>
+                <label>
+                    Gender
+                    <select id="Gender" name="Gender" onChange={(e) => {
+                        setNewSpeaker(prev => ({...prev, gender: e.target.value}))
+                        console.log(newSpeaker);
+                    }} required={true}>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </label>
+
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    postSpeaker()
+                    console.log(newSpeaker);
                 }} type="submit">Create</button>
             </form>
 
