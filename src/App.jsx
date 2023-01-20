@@ -143,7 +143,7 @@ function App() {
 
 
 
-                    <Route path="/signUp" element={<SignUp/>}/>
+                    {/*<Route path="/signUp" element={<SignUp/>}/>*/}
                     <Route path="login" element={<LogIn loggedIn={loggedIn} setLoggedIn={setLoggedIn}
                                                         setErrorMessage={setErrorMessage} logout={logout}/>}/>
                     <Route

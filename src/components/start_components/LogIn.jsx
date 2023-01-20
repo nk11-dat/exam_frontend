@@ -31,11 +31,6 @@ function LogIn({loggedIn, setLoggedIn, logout, setErrorMessage}) {
                     <UserPage />
                     <button onClick={logout}>Logout</button>
                 </div>)}
-            {loggedIn ? "" :
-                (<div className="signUp">
-                <h5>Not a user?</h5>
-                <button onClick={signUp}>Sign up here!</button>
-            </div>)}
         </div>
     )
 
