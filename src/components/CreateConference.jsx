@@ -15,6 +15,12 @@ function CreateConference({postConference, setNewConference, newConference, post
         {value: 3, label: "Loading...3"},
     ];
 
+    useEffect(() => {
+        setNewSpeaker({})
+        setNewTalk({})
+        setNewConference({})
+    },[])
+
 
     const onDateChange = (e) => {
         // console.log(e.target.value)
@@ -34,6 +40,7 @@ function CreateConference({postConference, setNewConference, newConference, post
         postConference()
         console.log(newConference);
         console.log("Conference created!...")
+        setNewConference({})
     };
 
     return (
@@ -124,6 +131,7 @@ function CreateConference({postConference, setNewConference, newConference, post
                     e.preventDefault();
                     postTalk()
                     console.log(newTalk);
+                    setNewTalk({})
                 }} type="submit">Create</button>
             </form>
 
@@ -159,6 +167,7 @@ function CreateConference({postConference, setNewConference, newConference, post
                         setNewSpeaker(prev => ({...prev, gender: e.target.value}))
                         console.log(newSpeaker);
                     }} required={true}>
+                        <option></option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select>
@@ -168,6 +177,7 @@ function CreateConference({postConference, setNewConference, newConference, post
                     e.preventDefault();
                     postSpeaker()
                     console.log(newSpeaker);
+                    setNewSpeaker({})
                 }} type="submit">Create</button>
             </form>
 

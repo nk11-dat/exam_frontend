@@ -15,12 +15,12 @@ function SideBar(props) {
                         <NavLink to="/AllConferences">All Conferences</NavLink>
                     </div>
                     <br/>
-                    <div> {/*onClick={() => props.fetchAllHarbours()}*/}
-                        <NavLink to="/">US2</NavLink>
+                    <div onClick={() => props.fetchAllConferences()}> {/*onClick={() => props.fetchAllHarbours()}*/}
+                        <NavLink to="/AllConferences">US2</NavLink>
                     </div>
                     <br/>
                     <div>
-                        <NavLink to="/">US3</NavLink>
+                        <NavLink to="/TalksBySpeaker">US3</NavLink>
                     </div>
 
                 </nav> : ""}

@@ -15,6 +15,7 @@ import DeleteTalk from "./components/DeleteTalk";
 import DeleteChoice from "./components/DeleteChoice.jsx";
 import EditConference from "./components/EditConference.jsx";
 import EditTalk from "./components/EditTalk.jsx";
+import TalksBySpeaker from "./components/TalksBySpeaker.jsx";
 
 function App() {
     //useStates her
@@ -36,13 +37,6 @@ function App() {
         }, setErrorMessage)
     }
 
-    const fetchSpecificConference = (name) => {
-        apiFacade.fetchData("admin/specific/conference/" + name, (data) => {
-            console.log(data);
-            setSpecificConference(data)
-        }, setErrorMessage)
-    }
-
     const fetchAllTalks = () => {
         apiFacade.fetchData("admin/all/talks", (data) => {
             console.log(data);
@@ -57,8 +51,22 @@ function App() {
         }, setErrorMessage)
     }
 
-    const postConference = () => {
-        apiFacade.postData("admin/post/conference", (data) => {
+    const fetchSpecificConference = (name) => {
+        apiFacade.fetchData("admin/specific/conference/" + name, (data) => {
+            console.log(data);
+            setSpecificConference(data)
+        }, setErrorMessage)
+    }
+
+    const fetchTalksBySpeaker = (name) => {
+        apiFacade.postData("user/talksBySpeaker/" + name, (data) => {
+            console.log(data);
+            setAllTalks(data)
+        }, setErrorMessage, "")
+    }
+
+    const postConference = async () => {
+        await apiFacade.postData("admin/post/conference", (data) => {
             console.log(data)
             setNewConference(data)
         }, setErrorMessage, newConference)
@@ -73,16 +81,16 @@ function App() {
         console.log(newTalk);
     }
 
-    const postTalk = () => {
-        apiFacade.postData("admin/post/talk", (data) => {
+    const postTalk = async () => {
+        await apiFacade.postData("admin/post/talk", (data) => {
             console.log(data)
             setNewTalk(data)
         }, setErrorMessage, newTalk)
         console.log(newTalk);
     }
 
-    const postSpeaker = () => {
-        apiFacade.postData("admin/post/speaker", (data) => {
+    const postSpeaker = async () => {
+        await apiFacade.postData("admin/post/speaker", (data) => {
             console.log(data)
             setNewSpeaker(data)
         }, setErrorMessage, newSpeaker)
@@ -122,6 +130,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<WelcomePage/>}/>
                     <Route path="AllConferences" element={apiFacade.hasUserAccess('speaker', loggedIn) ? <AllConferences dataFromServer={allConferences}/> : <AccessDenied/>}/>
+                    <Route path="TalksBySpeaker" element={apiFacade.hasUserAccess('speaker', loggedIn) ? <TalksBySpeaker dataFromServer={allTalks} fetchTalksBySpeaker={fetchTalksBySpeaker}/> : <AccessDenied/>}/>
                     <Route path="CreateConference" element={apiFacade.hasUserAccess('admin', loggedIn) ?
                         <CreateConference postConference={postConference} postTalk={postTalk} postSpeaker={postSpeaker} newSpeaker={newSpeaker} setNewSpeaker={setNewSpeaker} setNewTalk={setNewTalk} newTalk={newTalk} newConference={newConference} setNewConference={setNewConference} allConferences={allConferences}/> : <AccessDenied/>}/>
                     {/*<Route path="DeleteChoice" element={apiFacade.hasUserAccess('admin', loggedIn) ? <DeleteChoice fetchAllTalks={fetchAllTalks}/> : <AccessDenied/>}>*/}
