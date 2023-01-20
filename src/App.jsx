@@ -14,6 +14,7 @@ import CreateConference from "./components/CreateConference.jsx";
 import DeleteTalk from "./components/DeleteTalk";
 import DeleteChoice from "./components/DeleteChoice.jsx";
 import EditConference from "./components/EditConference.jsx";
+import EditTalk from "./components/EditTalk.jsx";
 
 function App() {
     //useStates her
@@ -62,6 +63,14 @@ function App() {
             setNewConference(data)
         }, setErrorMessage, newConference)
         console.log(newConference);
+    }
+
+    const putTalk = () => {
+        apiFacade.putData("admin/put/talk", (data) => {
+            console.log(data)
+            setNewTalk(data)
+        }, setErrorMessage, newTalk)
+        console.log(newTalk);
     }
 
     const postTalk = () => {
@@ -119,6 +128,7 @@ function App() {
                     <Route path="DeleteTalk" element={apiFacade.hasUserAccess('admin', loggedIn) ? <DeleteTalk dataFromServer={allTalks} onDelete={deleteTalk}/> : <AccessDenied/>}/>
                         {/*More deletion stuff goes here...*/}
                     {/*</Route>*/}
+                    <Route path="EditTalk" element={apiFacade.hasUserAccess('admin', loggedIn) ? <EditTalk allConferences={allConferences} allTalks={allTalks} allSpeakers={allSpeakers} newTalk={newTalk} setNewTalk={setNewTalk} putTalk={putTalk}/> : <AccessDenied/>}/>
                     <Route path="EditConference" element={apiFacade.hasUserAccess('admin', loggedIn) ? <EditConference conferenceToEdit={editConference} setConferenceToEdit={setEditConference} putConference={putConference} allConferences={allConferences} allTalks={allTalks} allSpeakers={allSpeakers} fetchSpecificConference={fetchSpecificConference} specificConference={specificConference}/> : <AccessDenied/>}/>
 
 

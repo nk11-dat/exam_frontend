@@ -34,10 +34,13 @@ function SideBar(props) {
                     }>
                         <NavLink to="/CreateConference">CreateConference(US4)</NavLink>
                     </div>
-                    {/*<br/>*/}
-                    {/*<div>*/}
-                    {/*    <NavLink to="/AllHarbours">US5</NavLink>*/}
-                    {/*</div>*/}
+                    <div onClick={() => {
+                        props.fetchAllTalks()
+                        props.fetchAllConferences()
+                        props.fetchAllSpeakers()
+                    }}>
+                        <NavLink to="/EditTalk">US5</NavLink>
+                    </div>
                     <br/>
                     <div onClick={() => {
                         props.fetchAllTalks()
