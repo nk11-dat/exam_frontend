@@ -59,10 +59,10 @@ function App() {
     }
 
     const fetchTalksBySpeaker = (name) => {
-        apiFacade.postData("user/talksBySpeaker/" + name, (data) => {
+        apiFacade.fetchData("user/talksBySpeaker/" + name, (data) => {
             console.log(data);
             setAllTalks(data)
-        }, setErrorMessage, "")
+        }, setErrorMessage)
     }
 
     const postConference = async () => {
